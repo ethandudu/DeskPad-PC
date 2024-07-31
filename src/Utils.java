@@ -1,4 +1,5 @@
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -22,6 +23,10 @@ public class Utils {
 
     public static void runCommand(String command) throws Exception {
         Runtime.getRuntime().exec(command);
+    }
+
+    public static Array getAllSoftwares() {
+        return null;
     }
 
     public static void pressKey(String key) throws AWTException {
