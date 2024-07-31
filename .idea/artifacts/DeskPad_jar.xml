@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="DeskPad:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/DeskPad_jar</output-path>
+    <root id="archive" name="DeskPad.jar">
+      <element id="module-output" name="DeskPad" />
+    </root>
+  </artifact>
+</component>
