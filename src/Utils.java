@@ -1,3 +1,9 @@
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.security.MessageDigest;
@@ -5,6 +11,7 @@ import java.security.NoSuchAlgorithmException;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class Utils {
     public static String getSHA256(String word) throws NoSuchAlgorithmException, UnsupportedEncodingException {
@@ -25,8 +32,30 @@ public class Utils {
         Runtime.getRuntime().exec(command);
     }
 
-    public static Array getAllSoftwares() {
-        return null;
+    public static JSONArray runningSoftwares() throws IOException {
+        ProcessBuilder processBuilder = new ProcessBuilder("tasklist.exe", "/fo", "csv", "/nh");
+        Process process = processBuilder.start();
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line;
+        JSONArray processList = new JSONArray();
+
+        // Read and skip the first line if it contains headers (already handled by "/nh" in the command)
+        while ((line = reader.readLine()) != null) {
+            if (!line.trim().isEmpty()) {
+                String[] processInfo = line.split("\",\"");
+                for (int i = 0; i < processInfo.length; i++) {
+                    processInfo[i] = processInfo[i].replace("\"", "").trim();
+                }
+                if (processInfo.length == 5) {
+                    if (processInfo[2].equals("Console")) {
+                        continue;
+                    }
+                    processList.put(processInfo[0]);
+                }
+            }
+        }
+        return processList;
     }
 
     public static void pressKey(String key) throws AWTException {

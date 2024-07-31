@@ -2,6 +2,7 @@ import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.security.NoSuchAlgorithmException;
@@ -57,6 +58,20 @@ public class DeskPadServer extends org.java_websocket.server.WebSocketServer {
         } catch (Exception e) {
             System.out.println("Invalid JSON from " + conn.getRemoteSocketAddress());
             return;
+        }
+
+        if (data.has("type") && data.getString("type").equals("get") && data.has("message")) {
+            if (data.getString("message").equals("runningProcs")) {
+                JSONObject response = new JSONObject();
+                response.put("type", "get");
+                try {
+                    response.put("message", Utils.runningSoftwares());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                conn.send(response.toString());
+                return;
+            }
         }
 
         DeskPad.onMessage(data);
