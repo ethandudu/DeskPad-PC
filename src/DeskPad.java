@@ -9,6 +9,12 @@ public class DeskPad {
     static DeskPadServer server;
     static String password;
     public static void main(String[] args) {
+
+        //OS Check
+        if (!System.getProperty("os.name").toLowerCase().contains("win")) {
+            System.out.println("Only Windows is not supported");
+            System.exit(1);
+        }
         if (args.length != 2) {
             System.out.println("Usage: java DeskPad <port> <password>");
             System.exit(1);
