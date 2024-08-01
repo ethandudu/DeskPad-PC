@@ -49,8 +49,6 @@ public class DeskPad {
     }
 
     public static boolean authenticate(String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        System.out.println(password);
-        System.out.println((DeskPad.password));
         return password.equals(Utils.getSHA256(DeskPad.password));
     }
 }
