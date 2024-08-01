@@ -25,6 +25,7 @@ public class DeskPadServer extends org.java_websocket.server.WebSocketServer {
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
         System.out.println("Closed connection to " + conn.getRemoteSocketAddress());
+        connections.remove(conn);
     }
 
     @Override
