@@ -1,3 +1,5 @@
+package fr.ethanduault.deskpad;
+
 import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.security.NoSuchAlgorithmException;

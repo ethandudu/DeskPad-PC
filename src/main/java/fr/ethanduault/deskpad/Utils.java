@@ -1,17 +1,16 @@
+package fr.ethanduault.deskpad;
+
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 public class Utils {
     public static String getSHA256(String word) throws NoSuchAlgorithmException, UnsupportedEncodingException {
