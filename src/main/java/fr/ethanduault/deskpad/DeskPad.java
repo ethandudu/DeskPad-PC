@@ -14,26 +14,46 @@ public class DeskPad {
 
         //OS Check
         if (!System.getProperty("os.name").toLowerCase().contains("win")) {
-            System.out.println("Only Windows is not supported");
-            System.exit(1);
-        }
-        if (args.length != 2) {
-            System.out.println("Usage: java DeskPad <port> <password>");
+            System.out.println("Only Windows is supported");
             System.exit(1);
         }
 
-        int port = Integer.parseInt(args[0]);
-        password = args[1];
+        String ip = "0.0.0.0";
+        int port = 0;
 
-        server = new DeskPadServer(new InetSocketAddress(port));
+        for (int i = 0; i < args.length; i++) {
+            switch (args[i]) {
+                case "-port":
+                    port = Integer.parseInt(args[++i]);
+                    break;
+                case "-ip":
+                    ip = args[++i];
+                    break;
+                case "-password":
+                    password = args[++i];
+                    break;
+                default:
+                    System.out.println("Invalid argument: " + args[i] + "\nUsage: -port [port] -ip [ip] -password <password>");
+                    System.exit(1);
+            }
+        }
+
+        if (password == null || port == 0) {
+            System.out.println("Usage: -port [port] -ip [ip] -password <password>");
+            System.exit(1);
+        }
+
+        InetSocketAddress address = new InetSocketAddress(ip, port);
+
+        System.out.println("Starting server on " + address.getPort());
+
+        server = new DeskPadServer(address);
 
         server.start();
     }
 
     public static void onMessage(JSONObject message) {
-
         try {
-
             if (message.has("type") && message.getString("type").equals("run") && message.has("message")) {
                 Utils.runCommand(message.getString("message"));
             }

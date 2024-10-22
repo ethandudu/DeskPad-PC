@@ -76,7 +76,6 @@ public class DeskPadServer extends org.java_websocket.server.WebSocketServer {
                 return;
             }
         }
-
         DeskPad.onMessage(data);
     }
 
@@ -89,12 +88,5 @@ public class DeskPadServer extends org.java_websocket.server.WebSocketServer {
     @Override
     public void onStart() {
         System.out.println("Server started on " + getAddress());
-    }
-
-    public static void main(String[] args) {
-        int port = Integer.parseInt(args[0]);
-        DeskPadServer server = new DeskPadServer(new InetSocketAddress(port));
-        server.start();
-        System.out.println("Server started on port " + port);
     }
 }
